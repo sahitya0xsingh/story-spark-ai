@@ -70,7 +70,7 @@ async function main() {
   const defaultCorsOrigins = 
     process.env.NODE_ENV === "development"
       ? ["http://localhost:4001", "http://localhost:4002"]
-      : [];
+      : ["https://storysparkai.vercel.app"];
 
   const socketCorsOrigins =
     config.cors_origins && config.cors_origins.length > 0
