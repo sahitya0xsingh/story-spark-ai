@@ -39,13 +39,15 @@ async function main() {
 
     try {
       if (mongoose && mongoose.connection && mongoose.connection.readyState !== 0) {
-        await mongoose.connection.close();
+        // Pass false to close() to gracefully close without forcefully killing connections
+        await mongoose.connection.close(false);
         logger.info('🔌 MongoDB connection safely closed.');
       }
-      process.exit(1);
+      // Allow a brief delay for any pending operations or logs to flush before exiting
+      setTimeout(() => process.exit(1), 500);
     } catch (shutdownError) {
       logger.error('❌ Error during graceful shutdown cleanup sequence:', shutdownError);
-      process.exit(1);
+      setTimeout(() => process.exit(1), 500);
     }
   };
 
